@@ -58,8 +58,13 @@ const getUserById = (req, res) => {
 const postUser = (req, res) => {
   const { firstname, lastname, email, city, language, hashedPassword } =
     req.body;
+  const emailUser = req.body.email;
+  //let emailOk = false;
 
   database
+    .query("select email from users where email = ?", [emailUser])
+    .then(([users]) => {
+      if (users[0] == null) {        database
     .query(
       "INSERT INTO users(firstname, lastname, email, city, language, hashedPassword) VALUES (?, ?, ?, ?, ?, ?)",
       [firstname, lastname, email, city, language, hashedPassword]
@@ -71,6 +76,14 @@ const postUser = (req, res) => {
       console.error(err);
       res.status(500).send("Error saving the user");
     });
+      } else {
+        res.status(500).send("email already used");
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Error retrieving data from database");
+    });  
 };
 
 const updateUser = (req, res) => {
