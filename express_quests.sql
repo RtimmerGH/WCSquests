@@ -6,8 +6,7 @@ CREATE TABLE movies (
   director varchar(255) NOT NULL,
   year varchar(255) NOT NULL,
   color varchar(255) NOT NULL,
-  duration int NOT NULL
-  hashedPassword varchar(255) NOT NULL
+  duration int NOT NULL  
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb3;
 
 INSERT INTO
